@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %} - Futispelit</title>
+</head>
+<body>
+  <header>
+    <h1>Futispelit</h1>
+    <nav>
+      <a href="/">Etusivu</a>
+      {% if session.username %}
+        | <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
+        | <a href="/logout">Kirjaudu ulos</a>
+      {% else %}
+        | <a href="/login">Kirjaudu sisään</a>
+        | <a href="/register">Luo tunnus</a>
+      {% endif %}
+    </nav>
+    <hr />
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+
+</body>
+</html>
