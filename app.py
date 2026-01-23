@@ -4,6 +4,7 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import db
+import games
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -27,11 +28,10 @@ def create_game():
     time = request.form["time"]
     location = request.form["location"]
     player_count = request.form["player_count"]
+    user_id = session.get("user_id")
 
-    sql = """INSERT INTO games
-             (title, description, date, time, location, player_count)
-             VALUES (?, ?, ?, ?, ?, ?)"""
-    db.execute(sql, [title, description, date, time, location, player_count])
+    games.add_game(title, description, date, time,
+                   location, player_count, user_id)
 
     return redirect("/")
 
