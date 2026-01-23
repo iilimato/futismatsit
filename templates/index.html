@@ -16,7 +16,15 @@
 </p>
 
 <h3>Viimeisimmät ilmoitukset</h3>
+<ul>
+  {% for game in games %}
+    <li>
+      <a href="/game/{{ game.id }}">{{ game.title }}</a>
+      - {{ game.date }} klo {{ game.time }} - {{ game.location }}
+    </li>
+  {% else %}
+    <li>Ei ilmoituksia.</li>
+  {% endfor %}
 
-<p>Ei vielä ilmoituksia.</p>
 
 {% endblock %}
