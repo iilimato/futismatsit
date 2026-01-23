@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ game.title }}{% endblock %}
+
+{% block content %}
+<head><title>{{ game.title }}</title></head>
+
+<h2>{{ game.title }}</h2>
+
+<p>{{ game.description }}</p>
+<p>Paikka: {{ game.location }}</p>
+<p>Päivämäärä: {{ game.date }} klo {{ game.time }}</p>
+<p>Pelaajia tarvitaan: {{ game.player_count }}</p>
+<p>Ilmoittaja: <a href="/user/{{ game.user_id }}">Käyttäjä {{ game.user_id }}</a></p>
+
+
+
+{% endblock %}
