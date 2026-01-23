@@ -12,6 +12,5 @@ CREATE TABLE games (
     location TEXT,
     game_time TEXT,
     players_needed INTEGER,
-    user_id INTEGER REFERENCES users,
-    created_at TEXT
+    user_id INTEGER REFERENCES users
 );

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Luo uusi peli-ilmoitus</title>
+</head>
+
+<body>
+    <h1>Luo uusi peli-ilmoitus</h1>
+  <form action="/create_game" method="post">
+    <p>
+      Otsikko: <br />
+      <input type="text" name="title" />
+    </p>
+    <p>
+      Kuvaus: <br />
+      <textarea name="description" rows="4" cols="60"></textarea>
+    </p>
+    <p>
+      Kenttä: <br />
+      <input type="text" name="location" />
+    </p>
+    <p> 
+        Pelaajien määrä: <br />
+        <input type="number" name="player_count" min="2" />
+    </p>
+    <p>
+      Päivämäärä (DD.MM.YYYY): <br />
+      <input type="text" name="date" />
+    </p>
+    <p>
+      Kellonaika (HH:MM): <br />
+      <input type="text" name="time" />
+    </p>
+    <input type="submit" value="Luo ilmoitus" />
+  </form>
+</body>
+
+</html>

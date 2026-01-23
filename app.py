@@ -19,6 +19,23 @@ def new_game():
     return render_template("new_game.html")
 
 
+@app.route("/create_game", methods=["POST"])
+def create_game():
+    title = request.form["title"]
+    description = request.form["description"]
+    date = request.form["date"]
+    time = request.form["time"]
+    location = request.form["location"]
+    player_count = request.form["player_count"]
+
+    sql = """INSERT INTO games
+             (title, description, date, time, location, player_count)
+             VALUES (?, ?, ?, ?, ?, ?)"""
+    db.execute(sql, [title, description, date, time, location, player_count])
+
+    return redirect("/")
+
+
 @app.route("/register")
 def register():
     return render_template("register.html")
