@@ -27,6 +27,27 @@ def new_game():
     return render_template("new_game.html")
 
 
+@app.route("/edit_game/<int:game_id>")
+def edit_game(game_id):
+    game = games.get_game(game_id)
+    return render_template("edit_game.html", game=game)
+
+
+@app.route("/update_game", methods=["POST"])
+def update_game():
+    game_id = request.form["game_id"]
+    title = request.form["title"]
+    description = request.form["description"]
+    date = request.form["date"]
+    time = request.form["time"]
+    location = request.form["location"]
+    player_count = request.form["player_count"]
+
+    games.update_game(game_id, title, description, date, time,
+                      location, player_count)
+    return redirect(f"/game/{game_id}")
+
+
 @app.route("/create_game", methods=["POST"])
 def create_game():
     title = request.form["title"]

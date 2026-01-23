@@ -6,12 +6,15 @@
 <head><title>{{ game.title }}</title></head>
 
 <h2>{{ game.title }}</h2>
+{% if session.user_id == game.user_id %}
+<p><a href="/edit_game/{{ game.id }}">Muokkaa ilmoitusta</a></p>
+{% endif %}
 
 <p>{{ game.description }}</p>
 <p>Paikka: {{ game.location }}</p>
 <p>Päivämäärä: {{ game.date }} klo {{ game.time }}</p>
 <p>Pelaajia tarvitaan: {{ game.player_count }}</p>
-<p>Ilmoittaja: <a href="/user/{{ game.user_id }}">Käyttäjä {{ game.user_id }}</a></p>
+<p>Ilmoittaja: <a href="/user/{{ game.user_id }}"> {{ game.username }}</a></p>
 
 
 
