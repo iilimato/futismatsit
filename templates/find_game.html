@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}Etsi peli{% endblock %}
+
+{% block content %}
+<head><title>Etsi peli</title></head>
+
+<body>
+    <h1>Etsi peli</h1>
+    <form action="/find_game" method="get">
+        <label for="location">Hakusana:</label>
+        <input type="text" id="query" name="query" value="{{ query }}"/>
+        <input type="submit" value="Etsi" />
+    </form>
+
+    {% if games %}
+        <h2>Hakutulokset:</h2>
+        <ul>
+        {% for game in games %}
+            <li>
+                <a href="/game/{{ game.id }}">{{ game.title }}</a>
+                - {{ game.date }} klo {{ game.time }} - {{ game.location }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% elif query %}
+        <p>Pelejä ei löytynyt hakusanalla "{{ query }}".</p>
+    {% endif %}
+</body>
+
+
+
+
+
+{% endblock %}

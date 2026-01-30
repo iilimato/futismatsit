@@ -43,3 +43,15 @@ def update_game(game_id, title, description, date, time, location, player_count)
 def delete_game(game_id):
     sql = "DELETE FROM games WHERE id = ?"
     db.execute(sql, [game_id])
+
+
+def find_games_by_query(query):
+    sql = """SELECT games.id, games.title, games.description,
+             games.date, games.time, games.location,
+             games.player_count, users.username
+             FROM games LEFT JOIN users
+             ON games.user_id = users.id
+             WHERE games.title LIKE ? OR games.description LIKE ? OR games.location LIKE ?
+             ORDER BY games.id DESC"""
+    like_query = f"%{query}%"
+    return db.query(sql, [like_query, like_query, like_query])

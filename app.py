@@ -33,6 +33,17 @@ def edit_game(game_id):
     return render_template("edit_game.html", game=game)
 
 
+@app.route("/find_game")
+def find_game():
+    query = request.args.get("query")
+    games_list = []
+    if query:
+        games_list = games.find_games_by_query(query)
+    if not query:
+        return render_template("find_game.html", games=games_list, query="")
+    return render_template("find_game.html", games=games_list, query=query)
+
+
 @app.route("/delete_game/<int:game_id>", methods=["GET", "POST"])
 def delete_game(game_id):
     if request.method == "POST":
