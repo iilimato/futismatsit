@@ -9,11 +9,16 @@
   Täällä voit löytää seuraa jalkapalloon tai luoda oman ilmoituksen pelistä.
 </p>
 
+{% if "user_id" in session %}
+
+<p>Olet kirjautunut sisään käyttäjänä {{ session.username }}. </p>
 <p>
   <a href="/new_game">Luo uusi ilmoitus</a>
+</p>
+{% endif %}
+
+<p>
   <a href="/find_game">Etsi peli</a>
-  <a href="/login">Kirjaudu sisään</a> tai
-  <a href="/register">Luo tunnus</a>
 </p>
 
 <h3>Viimeisimmät ilmoitukset</h3>
