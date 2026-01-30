@@ -10,6 +10,11 @@ app = Flask(__name__)
 app.secret_key = config.secret_key
 
 
+def check_logged_in():
+    if "user_id" not in session:
+        abort(403)
+
+
 @app.route("/")
 def index():
     all_games = games.get_games()
@@ -26,11 +31,13 @@ def game(game_id):
 
 @app.route("/new_game")
 def new_game():
+    check_logged_in()
     return render_template("new_game.html")
 
 
 @app.route("/edit_game/<int:game_id>")
 def edit_game(game_id):
+    check_logged_in()
     game = games.get_game(game_id)
     if not game:
         abort(404)
@@ -52,6 +59,7 @@ def find_game():
 
 @app.route("/delete_game/<int:game_id>", methods=["GET", "POST"])
 def delete_game(game_id):
+    check_logged_in()
     game = games.get_game(game_id)
     if not game:
         abort(404)
@@ -70,7 +78,7 @@ def delete_game(game_id):
 
 @app.route("/update_game", methods=["POST"])
 def update_game():
-
+    check_logged_in()
     game_id = request.form["game_id"]
     game = games.get_game(game_id)
     if not game:
@@ -91,6 +99,7 @@ def update_game():
 
 @app.route("/create_game", methods=["POST"])
 def create_game():
+    check_logged_in()
     title = request.form["title"]
     description = request.form["description"]
     date = request.form["date"]
@@ -152,5 +161,6 @@ def login():
 
 @app.route("/logout")
 def logout():
+    del session["user_id"]
     del session["username"]
     return redirect("/")
