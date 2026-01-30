@@ -33,6 +33,19 @@ def edit_game(game_id):
     return render_template("edit_game.html", game=game)
 
 
+@app.route("/delete_game/<int:game_id>", methods=["GET", "POST"])
+def delete_game(game_id):
+    if request.method == "POST":
+        if "confirm" in request.form:
+            games.delete_game(game_id)
+            return redirect("/")
+        else:
+            return redirect(f"/game/{game_id}")
+    if request.method == "GET":
+        game = games.get_game(game_id)
+        return render_template("delete_game.html", game=game)
+
+
 @app.route("/update_game", methods=["POST"])
 def update_game():
     game_id = request.form["game_id"]

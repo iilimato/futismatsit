@@ -38,3 +38,8 @@ def update_game(game_id, title, description, date, time, location, player_count)
              WHERE id = ?"""
     db.execute(sql, [title, description, date, time,
                location, player_count, game_id])
+
+
+def delete_game(game_id):
+    sql = "DELETE FROM games WHERE id = ?"
+    db.execute(sql, [game_id])

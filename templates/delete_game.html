@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Poista peli-ilmoitus</title>
+</head>
+
+<body>
+    <h1>Poista peli-ilmoitus</h1>
+    <p>Oletko varma, että haluat poistaa ilmoituksen pelistä "{{ game.title }}"?</p>
+  <form action="/delete_game/{{ game.id }}" method="post">
+  <input type="submit" name="confirm" value="Poista ilmoitus" />
+  <input type="submit" name ="cancel" value="Peruuta" />
+  </form>
+</body>
+
+</html>
