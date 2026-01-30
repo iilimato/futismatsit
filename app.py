@@ -1,6 +1,5 @@
-from os import abort
 import sqlite3
-from flask import Flask
+from flask import Flask, abort
 from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import config
@@ -20,6 +19,8 @@ def index():
 @app.route("/game/<int:game_id>")
 def game(game_id):
     game = games.get_game(game_id)
+    if not game:
+        abort(404)
     return render_template("show_game.html", game=game)
 
 
@@ -31,6 +32,8 @@ def new_game():
 @app.route("/edit_game/<int:game_id>")
 def edit_game(game_id):
     game = games.get_game(game_id)
+    if not game:
+        abort(404)
     if game["user_id"] != session.get("user_id"):
         abort(403)
     return render_template("edit_game.html", game=game)
@@ -50,6 +53,8 @@ def find_game():
 @app.route("/delete_game/<int:game_id>", methods=["GET", "POST"])
 def delete_game(game_id):
     game = games.get_game(game_id)
+    if not game:
+        abort(404)
     if game["user_id"] != session.get("user_id"):
         abort(403)
     if request.method == "POST":
@@ -68,6 +73,8 @@ def update_game():
 
     game_id = request.form["game_id"]
     game = games.get_game(game_id)
+    if not game:
+        abort(404)
     if game["user_id"] != session.get("user_id"):
         abort(403)
     title = request.form["title"]
