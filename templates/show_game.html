@@ -3,8 +3,6 @@
 {% block title %}{{ game.title }}{% endblock %}
 
 {% block content %}
-<head><title>{{ game.title }}</title></head>
-
 <h2>{{ game.title }}</h2>
 {% if session.user_id == game.user_id %}
 <p><a href="/edit_game/{{ game.id }}">Muokkaa ilmoitusta</a></p>

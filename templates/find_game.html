@@ -3,10 +3,7 @@
 {% block title %}Etsi peli{% endblock %}
 
 {% block content %}
-<head><title>Etsi peli</title></head>
-
-<body>
-    <h1>Etsi peli</h1>
+<h2>Etsi peli</h2>
     <form action="/find_game" method="get">
         <label for="location">Hakusana:</label>
         <input type="text" id="query" name="query" value="{{ query }}"/>
@@ -26,7 +23,6 @@
     {% elif query %}
         <p>Pelejä ei löytynyt hakusanalla "{{ query }}".</p>
     {% endif %}
-</body>
 
 
 
