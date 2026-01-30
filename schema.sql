@@ -10,7 +10,8 @@ CREATE TABLE games (
     title TEXT,
     description TEXT,
     location TEXT,
-    game_time TEXT,
-    players_needed INTEGER,
+    date TEXT,
+    time TEXT,
+    player_count INTEGER,
     user_id INTEGER REFERENCES users
 );
