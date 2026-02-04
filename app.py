@@ -124,8 +124,16 @@ def create():
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
+
+    if not username or not password1 or not password2:
+        abort(403)
+    if len(username) < 1 or len(username) > 20:
+        abort(403)
+    if len(password1) < 4 or len(password1) > 100:
+        abort(403)
     if password1 != password2:
         return "VIRHE: salasanat eivät ole samat"
+
     password_hash = generate_password_hash(password1)
 
     try:
@@ -134,7 +142,7 @@ def create():
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
 
-    return "Tunnus luotu"
+    return redirect("/login")
 
 
 @app.route("/login", methods=["GET", "POST"])
