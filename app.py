@@ -29,7 +29,9 @@ def game(game_id):
     game = games.get_game(game_id)
     if not game:
         abort(404)
-    return render_template("show_game.html", game=game)
+    level = games.get_level(game_id)
+    # game["level"] = level
+    return render_template("show_game.html", game=game, level=level)
 
 
 @app.route("/find_game")
@@ -68,7 +70,8 @@ def edit_game(game_id):
         abort(404)
     if game["user_id"] != session.get("user_id"):
         abort(403)
-    return render_template("edit_game.html", game=game)
+    level = games.get_level(game_id)
+    return render_template("edit_game.html", game=game, level=level)
 
 
 @app.route("/delete_game/<int:game_id>", methods=["GET", "POST"])
@@ -101,6 +104,9 @@ def create_game():
     description = request.form["description"]
     if len(description) < 1 or len(description) > 1000:
         abort(403)
+    level = request.form["level"]
+    if level not in ["", "Aloittelijat", "Keskitaso", "Edistyneet"]:
+        abort(403)
     date = request.form["date"]
     if not re.search(r"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$", date):
         abort(403)
@@ -116,7 +122,7 @@ def create_game():
     user_id = session.get("user_id")
 
     games.add_game(title, description, date, time,
-                   location, player_count, user_id)
+                   location, player_count, user_id, level)
 
     return redirect("/")
 
@@ -148,9 +154,12 @@ def update_game():
     player_count = request.form["player_count"]
     if not re.search(r"^[1-9][0-9]{0,1}$", player_count):
         abort(403)
+    level = request.form["level"]
+    if level not in ["", "Aloittelijat", "Keskitaso", "Edistyneet"]:
+        abort(403)
 
     games.update_game(game_id, title, description, date, time,
-                      location, player_count)
+                      location, player_count, level)
     return redirect(f"/game/{game_id}")
 
 

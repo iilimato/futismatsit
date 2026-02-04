@@ -15,3 +15,10 @@ CREATE TABLE games (
     player_count INTEGER,
     user_id INTEGER REFERENCES users
 );
+
+
+CREATE TABLE game_levels (
+    id INTEGER PRIMARY KEY,
+    level TEXT,
+    game_id INTEGER REFERENCES games
+);

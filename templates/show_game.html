@@ -13,6 +13,9 @@
 <p>Paikka: {{ game.location }}</p>
 <p>Päivämäärä: {{ game.date }} klo {{ game.time }}</p>
 <p>Pelaajia tarvitaan: {{ game.player_count }}</p>
+{% if level %}
+<p>Taitotaso: {{ level }}</p>
+{% endif %}
 <p>Ilmoittaja: <a href="/user/{{ game.user_id }}"> {{ game.username }}</a></p>
 
 
