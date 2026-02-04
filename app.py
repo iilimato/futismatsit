@@ -10,10 +10,13 @@ app = Flask(__name__)
 app.secret_key = config.secret_key
 
 
+# helper: abort if user is not logged in
 def check_logged_in():
     if "user_id" not in session:
         abort(403)
 
+
+# pages: viewing games
 
 @app.route("/")
 def index():
@@ -27,23 +30,6 @@ def game(game_id):
     if not game:
         abort(404)
     return render_template("show_game.html", game=game)
-
-
-@app.route("/new_game")
-def new_game():
-    check_logged_in()
-    return render_template("new_game.html")
-
-
-@app.route("/edit_game/<int:game_id>")
-def edit_game(game_id):
-    check_logged_in()
-    game = games.get_game(game_id)
-    if not game:
-        abort(404)
-    if game["user_id"] != session.get("user_id"):
-        abort(403)
-    return render_template("edit_game.html", game=game)
 
 
 @app.route("/find_game")
@@ -66,6 +52,25 @@ def show_user(user_id):
     return render_template("show_user.html", user=user, games=user_games)
 
 
+# pages: creating, editing, and deleting games
+
+@app.route("/new_game")
+def new_game():
+    check_logged_in()
+    return render_template("new_game.html")
+
+
+@app.route("/edit_game/<int:game_id>")
+def edit_game(game_id):
+    check_logged_in()
+    game = games.get_game(game_id)
+    if not game:
+        abort(404)
+    if game["user_id"] != session.get("user_id"):
+        abort(403)
+    return render_template("edit_game.html", game=game)
+
+
 @app.route("/delete_game/<int:game_id>", methods=["GET", "POST"])
 def delete_game(game_id):
     check_logged_in()
@@ -83,6 +88,37 @@ def delete_game(game_id):
     if request.method == "GET":
         game = games.get_game(game_id)
         return render_template("delete_game.html", game=game)
+
+
+# form handlers: creating and updating games
+
+@app.route("/create_game", methods=["POST"])
+def create_game():
+    check_logged_in()
+    title = request.form["title"]
+    if len(title) < 1 or len(title) > 50:
+        abort(403)
+    description = request.form["description"]
+    if len(description) < 1 or len(description) > 1000:
+        abort(403)
+    date = request.form["date"]
+    if not re.search(r"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$", date):
+        abort(403)
+    time = request.form["time"]
+    if not re.search(r"^([01][0-9]|2[0-3]):[0-5][0-9]$", time):
+        abort(403)
+    location = request.form["location"]
+    if len(location) < 1 or len(location) > 50:
+        abort(403)
+    player_count = request.form["player_count"]
+    if not re.search(r"^[1-9][0-9]{0,1}$", player_count):
+        abort(403)
+    user_id = session.get("user_id")
+
+    games.add_game(title, description, date, time,
+                   location, player_count, user_id)
+
+    return redirect("/")
 
 
 @app.route("/update_game", methods=["POST"])
@@ -118,34 +154,7 @@ def update_game():
     return redirect(f"/game/{game_id}")
 
 
-@app.route("/create_game", methods=["POST"])
-def create_game():
-    check_logged_in()
-    title = request.form["title"]
-    if len(title) < 1 or len(title) > 50:
-        abort(403)
-    description = request.form["description"]
-    if len(description) < 1 or len(description) > 1000:
-        abort(403)
-    date = request.form["date"]
-    if not re.search(r"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$", date):
-        abort(403)
-    time = request.form["time"]
-    if not re.search(r"^([01][0-9]|2[0-3]):[0-5][0-9]$", time):
-        abort(403)
-    location = request.form["location"]
-    if len(location) < 1 or len(location) > 50:
-        abort(403)
-    player_count = request.form["player_count"]
-    if not re.search(r"^[1-9][0-9]{0,1}$", player_count):
-        abort(403)
-    user_id = session.get("user_id")
-
-    games.add_game(title, description, date, time,
-                   location, player_count, user_id)
-
-    return redirect("/")
-
+# user authentication: register, login, logout
 
 @app.route("/register")
 def register():
