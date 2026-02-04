@@ -57,6 +57,15 @@ def find_game():
     return render_template("find_game.html", games=games_list, query=query)
 
 
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    user_games = users.get_games_by_user(user_id)
+    return render_template("show_user.html", user=user, games=user_games)
+
+
 @app.route("/delete_game/<int:game_id>", methods=["GET", "POST"])
 def delete_game(game_id):
     check_logged_in()

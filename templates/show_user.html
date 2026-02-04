@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+{% extends "layout.html" %}
+
+{% block title %}Käyttäjäprofiili{% endblock %}
+
+{% block content %}
+<h2>Käyttäjä: {{ user.username }}</h2>
+<p> Käyttäjällä on yhteensä {{ games|count }} ilmoitusta.</p>
+<h3>Ilmoitukset peleistä:</h3>
+<ul>
+  {% for game in games %}
+    <li>
+      <a href="/game/{{ game.id }}">{{ game.title }}</a>
+      - {{ game.date }} klo {{ game.time }} - {{ game.location }}
+    </li>
+  {% else %}
+    <li>Käyttäjällä ei ole ilmoituksia.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
