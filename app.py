@@ -1,3 +1,4 @@
+import re
 import sqlite3
 from flask import Flask, abort
 from flask import redirect, render_template, request, session
@@ -85,11 +86,23 @@ def update_game():
     if game["user_id"] != session.get("user_id"):
         abort(403)
     title = request.form["title"]
+    if len(title) < 1 or len(title) > 50:
+        abort(403)
     description = request.form["description"]
+    if len(description) < 1 or len(description) > 1000:
+        abort(403)
     date = request.form["date"]
+    if not re.search(r"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$", date):
+        abort(403)
     time = request.form["time"]
+    if not re.search(r"^([01][0-9]|2[0-3]):[0-5][0-9]$", time):
+        abort(403)
     location = request.form["location"]
+    if len(location) < 1 or len(location) > 50:
+        abort(403)
     player_count = request.form["player_count"]
+    if not re.search(r"^[1-9][0-9]{0,1}$", player_count):
+        abort(403)
 
     games.update_game(game_id, title, description, date, time,
                       location, player_count)
@@ -100,11 +113,23 @@ def update_game():
 def create_game():
     check_logged_in()
     title = request.form["title"]
+    if len(title) < 1 or len(title) > 50:
+        abort(403)
     description = request.form["description"]
+    if len(description) < 1 or len(description) > 1000:
+        abort(403)
     date = request.form["date"]
+    if not re.search(r"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$", date):
+        abort(403)
     time = request.form["time"]
+    if not re.search(r"^([01][0-9]|2[0-3]):[0-5][0-9]$", time):
+        abort(403)
     location = request.form["location"]
+    if len(location) < 1 or len(location) > 50:
+        abort(403)
     player_count = request.form["player_count"]
+    if not re.search(r"^[1-9][0-9]{0,1}$", player_count):
+        abort(403)
     user_id = session.get("user_id")
 
     games.add_game(title, description, date, time,
