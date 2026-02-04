@@ -1,6 +1,18 @@
 import db
 
 
+def get_all_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    result = db.query(sql)
+
+    classes = {}
+    for title, value in result:
+        classes[title].append(
+            value) if title in classes else classes.setdefault(title, [value])
+
+    return classes
+
+
 def add_game(title, description, date, time, location, player_count, user_id, level):
     sql = """INSERT INTO games
              (title, description, date, time, location, player_count, user_id)

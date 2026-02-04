@@ -59,7 +59,8 @@ def show_user(user_id):
 @app.route("/new_game")
 def new_game():
     check_logged_in()
-    return render_template("new_game.html")
+    classes = games.get_all_classes()
+    return render_template("new_game.html", classes=classes)
 
 
 @app.route("/edit_game/<int:game_id>")
@@ -71,7 +72,8 @@ def edit_game(game_id):
     if game["user_id"] != session.get("user_id"):
         abort(403)
     level = games.get_level(game_id)
-    return render_template("edit_game.html", game=game, level=level)
+    classes = games.get_all_classes()
+    return render_template("edit_game.html", game=game, level=level, classes=classes)
 
 
 @app.route("/delete_game/<int:game_id>", methods=["GET", "POST"])
@@ -104,9 +106,13 @@ def create_game():
     description = request.form["description"]
     if len(description) < 1 or len(description) > 1000:
         abort(403)
-    level = request.form["level"]
-    if level not in ["", "Aloittelijat", "Keskitaso", "Edistyneet"]:
-        abort(403)
+    all_classes = games.get_all_classes()
+    level = request.form["Taitotaso"]
+    if level:
+        if "Taitotaso" not in all_classes:
+            abort(403)
+        if level not in all_classes["Taitotaso"]:
+            abort(403)
     date = request.form["date"]
     if not re.search(r"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$", date):
         abort(403)
@@ -154,9 +160,13 @@ def update_game():
     player_count = request.form["player_count"]
     if not re.search(r"^[1-9][0-9]{0,1}$", player_count):
         abort(403)
-    level = request.form["level"]
-    if level not in ["", "Aloittelijat", "Keskitaso", "Edistyneet"]:
-        abort(403)
+    all_classes = games.get_all_classes()
+    level = request.form["Taitotaso"]
+    if level:
+        if "Taitotaso" not in all_classes:
+            abort(403)
+        if level not in all_classes["Taitotaso"]:
+            abort(403)
 
     games.update_game(game_id, title, description, date, time,
                       location, player_count, level)

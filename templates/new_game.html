@@ -13,15 +13,18 @@
     Kuvaus: <br />
     <textarea name="description" rows="4" cols="60" maxlength="1000"></textarea>
   </p>
+  {% for class in classes %}
   <p> 
-    Pelin taso: <br />
-    <select name="level">
+    {{ class }}: <br />
+    <select name="{{ class }}">
       <option value="">(valitse)</option>
-      <option value="Aloittelijat">Aloittelijat</option>
-      <option value="Keskitaso">Keskitaso</option>
-      <option value="Edistyneet">Edistyneet</option>
+      {% for option in classes[class] %}
+      <option value="{{ option }}">{{ option }}</option>
+      {% endfor %}
     </select>
   </p>
+  {% endfor %}
+
   <p>
     Kenttä: <br />
     <input type="text" name="location" maxlength="50" required />

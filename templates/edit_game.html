@@ -13,15 +13,17 @@
     Kuvaus: <br />
     <textarea name="description" rows="4" cols="60" maxlength="1000" required>{{ game.description }}</textarea>
   </p>
-  <p> 
-    Pelin taso: <br />
-    <select name="level">
-      <option value="" {% if not level %}selected{% endif %}>(valitse)</option>
-      <option value="Aloittelijat" {% if level == "Aloittelijat" %}selected{% endif %}>Aloittelijat</option>
-      <option value="Keskitaso" {% if level == "Keskitaso" %}selected{% endif %}>Keskitaso</option>
-      <option value="Edistyneet" {% if level == "Edistyneet" %}selected{% endif %}>Edistyneet</option>
+  {% for class in classes %}
+  <p>
+    {{ class }}: <br />
+    <select name="{{ class }}">
+      <option value="">(valitse)</option>
+      {% for option in classes[class] %}
+      <option value="{{ option }}" {% if option == level %}selected{% endif %}>{{ option }}</option>
+      {% endfor %}
     </select>
   </p>
+  {% endfor %}
   <p>
     Kenttä: <br />
     <input type="text" name="location" value="{{ game.location }}" required maxlength="50" />
