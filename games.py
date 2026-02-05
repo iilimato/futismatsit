@@ -1,3 +1,4 @@
+from os import abort
 import db
 
 
@@ -62,6 +63,8 @@ def update_game(game_id, title, description, date, time, location, player_count,
 
 
 def delete_game(game_id):
+    sql_levels = "DELETE FROM game_levels WHERE game_id = ?"
+    db.execute(sql_levels, [game_id])
     sql = "DELETE FROM games WHERE id = ?"
     db.execute(sql, [game_id])
 
