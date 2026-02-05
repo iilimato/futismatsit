@@ -63,6 +63,8 @@ def update_game(game_id, title, description, date, time, location, player_count,
 
 
 def delete_game(game_id):
+    sql_comments = "DELETE FROM comments WHERE game_id = ?"
+    db.execute(sql_comments, [game_id])
     sql_levels = "DELETE FROM game_levels WHERE game_id = ?"
     db.execute(sql_levels, [game_id])
     sql = "DELETE FROM games WHERE id = ?"
@@ -87,3 +89,18 @@ def get_level(game_id):
     if len(result) == 0:
         return None
     return result[0]["level"]
+
+
+def add_comment(game_id, user_id, content):
+    sql = """INSERT INTO comments (game_id, user_id, content, sent_at)
+             VALUES (?, ?, ?, datetime('now'))"""
+    db.execute(sql, [game_id, user_id, content])
+
+
+def get_comments(game_id):
+    sql = """SELECT comments.id, comments.content, comments.sent_at,
+                    users.id user_id, users.username
+             FROM comments, users
+             WHERE comments.game_id = ? AND comments.user_id = users.id
+             ORDER BY comments.id DESC"""
+    return db.query(sql, [game_id])

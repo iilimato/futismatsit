@@ -30,8 +30,8 @@ def game(game_id):
     if not game:
         abort(404)
     level = games.get_level(game_id)
-    # game["level"] = level
-    return render_template("show_game.html", game=game, level=level)
+    comments = games.get_comments(game_id)
+    return render_template("show_game.html", game=game, level=level, comments=comments)
 
 
 @app.route("/find_game")
@@ -108,6 +108,8 @@ def create_game():
         abort(403)
     all_classes = games.get_all_classes()
     level = request.form["Taitotaso"]
+
+    # check that level is valid
     if level:
         if "Taitotaso" not in all_classes:
             abort(403)
@@ -226,3 +228,25 @@ def logout():
     del session["user_id"]
     del session["username"]
     return redirect("/")
+
+
+# form handler for creating comments
+
+@app.route("/create_comment", methods=["POST"])
+def create_comment():
+    check_logged_in()
+
+    game_id = request.form["game_id"]
+    content = request.form["content"]
+
+    if len(content) < 1 or len(content) > 1000:
+        abort(403)
+
+    game = games.get_game(game_id)
+    if not game:
+        abort(404)
+
+    user_id = session["user_id"]
+    games.add_comment(game_id, user_id, content)
+
+    return redirect("/game/" + str(game_id))

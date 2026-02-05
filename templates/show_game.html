@@ -18,6 +18,26 @@
 {% endif %}
 <p>Ilmoittaja: <a href="/user/{{ game.user_id }}"> {{ game.username }}</a></p>
 
+<h3>Kommentit</h3>
 
+{% if comments %}
+{% for comment in comments %}
+<div class="comment">
+    <p>Käyttäjä <strong><a href="/user/{{ comment.user_id }}">{{ comment.username }}</a></strong> kommentoi ({{ comment.sent_at }}):</p>
+    <p>{{ comment.content }}</p>
+</div>
+{% endfor %}
+{% else %}
+<p>Ei vielä kommentteja.</p>
+{% endif %}
+
+{% if session.user_id %}
+<h4>Lisää kommentti</h4>
+<form action="/create_comment" method="POST">
+    <input type="hidden" name="game_id" value="{{ game.id }}">
+    <p><textarea name="content" rows="4" cols="50" placeholder="Kirjoita kommentti..."></textarea></p>
+    <p><input type="submit" value="Lähetä"></p>
+</form>
+{% endif %}
 
 {% endblock %}
