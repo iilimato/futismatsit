@@ -28,3 +28,11 @@ CREATE TABLE game_levels (
     level TEXT,
     game_id INTEGER REFERENCES games(id)
 );
+
+CREATE TABLE comments (
+    id INTEGER PRIMARY KEY,
+    game_id INTEGER REFERENCES games,
+    user_id INTEGER REFERENCES users,
+    content TEXT,
+    sent_at TEXT
+);
