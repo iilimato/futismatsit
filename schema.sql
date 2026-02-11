@@ -36,3 +36,9 @@ CREATE TABLE comments (
     content TEXT,
     sent_at TEXT
 );
+
+CREATE TABLE registrations (
+    id INTEGER PRIMARY KEY,
+    game_id INTEGER REFERENCES games,
+    user_id INTEGER REFERENCES users
+);
