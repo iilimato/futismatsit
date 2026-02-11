@@ -1,0 +1,13 @@
+body {
+    font-family: Helvetica, sans-serif;
+    margin: auto;
+    max-width: 50em;}
+
+
+input[type=submit] {
+    background-color: lightgreen;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;}
