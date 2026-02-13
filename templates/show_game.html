@@ -18,6 +18,34 @@
 {% endif %}
 <p>Ilmoittaja: <a href="/user/{{ game.user_id }}"> {{ game.username }}</a></p>
 
+<h3>Ilmoittautuneet:</h3>
+
+{% if registrations %}
+<ol>
+{% for reg in registrations %}
+    <li><a href="/user/{{ reg.user_id }}">{{ reg.username }}</a></li>
+{% endfor %}
+</ol>
+{% else %}
+<p>Ei ilmoittautuneita.</p>
+{% endif %}
+
+{% if session.user_id %}
+    {% if is_registered %}
+    <form action="/unregister_game" method="POST">
+        <input type="hidden" name="game_id" value="{{ game.id }}">
+        <input type="submit" value="Peru ilmoittautuminen">
+    </form>
+    {% elif spots_left > 0 %}
+    <form action="/register_game" method="POST">
+        <input type="hidden" name="game_id" value="{{ game.id }}">
+        <input type="submit" value="Ilmoittaudu peliin">
+    </form>
+    {% else %}
+    <p>Peli on täynnä.</p>
+    {% endif %}
+{% endif %}
+
 <h3>Kommentit</h3>
 
 {% if comments %}

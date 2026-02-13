@@ -31,7 +31,14 @@ def game(game_id):
         abort(404)
     level = games.get_level(game_id)
     comments = games.get_comments(game_id)
-    return render_template("show_game.html", game=game, level=level, comments=comments)
+    registrations = games.get_registrations(game_id)
+    is_registered = False
+    if "user_id" in session:
+        is_registered = games.is_registered(game_id, session["user_id"])
+    spots_left = game["player_count"] - len(registrations)
+    return render_template("show_game.html", game=game, level=level,
+                           comments=comments, registrations=registrations,
+                           is_registered=is_registered, spots_left=spots_left)
 
 
 @app.route("/find_game")
@@ -249,4 +256,42 @@ def create_comment():
     user_id = session["user_id"]
     games.add_comment(game_id, user_id, content)
 
+    return redirect("/game/" + str(game_id))
+
+
+# form handlers for game registration
+
+@app.route("/register_game", methods=["POST"])
+def register_game():
+    check_logged_in()
+    game_id = request.form["game_id"]
+
+    game = games.get_game(game_id)
+    if not game:
+        abort(404)
+
+    if games.is_registered(game_id, session["user_id"]):
+        abort(403)
+
+    count = games.count_registrations(game_id)
+    if count >= game["player_count"]:
+        abort(403)
+
+    games.add_registration(game_id, session["user_id"])
+    return redirect("/game/" + str(game_id))
+
+
+@app.route("/unregister_game", methods=["POST"])
+def unregister_game():
+    check_logged_in()
+    game_id = request.form["game_id"]
+
+    game = games.get_game(game_id)
+    if not game:
+        abort(404)
+
+    if not games.is_registered(game_id, session["user_id"]):
+        abort(403)
+
+    games.remove_registration(game_id, session["user_id"])
     return redirect("/game/" + str(game_id))

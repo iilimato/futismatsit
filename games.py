@@ -63,6 +63,8 @@ def update_game(game_id, title, description, date, time, location, player_count,
 
 
 def delete_game(game_id):
+    sql_registrations = "DELETE FROM registrations WHERE game_id = ?"
+    db.execute(sql_registrations, [game_id])
     sql_comments = "DELETE FROM comments WHERE game_id = ?"
     db.execute(sql_comments, [game_id])
     sql_levels = "DELETE FROM game_levels WHERE game_id = ?"
@@ -104,3 +106,33 @@ def get_comments(game_id):
              WHERE comments.game_id = ? AND comments.user_id = users.id
              ORDER BY comments.id DESC"""
     return db.query(sql, [game_id])
+
+
+def add_registration(game_id, user_id):
+    sql = "INSERT INTO registrations (game_id, user_id) VALUES (?, ?)"
+    db.execute(sql, [game_id, user_id])
+
+
+def remove_registration(game_id, user_id):
+    sql = "DELETE FROM registrations WHERE game_id = ? AND user_id = ?"
+    db.execute(sql, [game_id, user_id])
+
+
+def get_registrations(game_id):
+    sql = """SELECT users.id user_id, users.username
+             FROM registrations, users
+             WHERE registrations.game_id = ? AND registrations.user_id = users.id
+             ORDER BY registrations.id"""
+    return db.query(sql, [game_id])
+
+
+def is_registered(game_id, user_id):
+    sql = "SELECT id FROM registrations WHERE game_id = ? AND user_id = ?"
+    result = db.query(sql, [game_id, user_id])
+    return len(result) > 0
+
+
+def count_registrations(game_id):
+    sql = "SELECT COUNT(*) count FROM registrations WHERE game_id = ?"
+    result = db.query(sql, [game_id])
+    return result[0]["count"]
