@@ -1,4 +1,3 @@
-from os import abort
 import db
 
 
