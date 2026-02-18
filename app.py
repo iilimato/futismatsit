@@ -1,4 +1,5 @@
 import re
+import secrets
 import sqlite3
 from flask import Flask, abort
 from flask import redirect, render_template, request, session
@@ -13,6 +14,13 @@ app.secret_key = config.secret_key
 # helper: abort if user is not logged in
 def check_logged_in():
     if "user_id" not in session:
+        abort(403)
+
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
 
@@ -92,6 +100,7 @@ def delete_game(game_id):
     if game["user_id"] != session.get("user_id"):
         abort(403)
     if request.method == "POST":
+        check_csrf()
         if "confirm" in request.form:
             games.delete_game(game_id)
             return redirect("/")
@@ -107,6 +116,7 @@ def delete_game(game_id):
 @app.route("/create_game", methods=["POST"])
 def create_game():
     check_logged_in()
+    check_csrf()
     title = request.form["title"]
     if len(title) < 1 or len(title) > 50:
         abort(403)
@@ -145,6 +155,7 @@ def create_game():
 @app.route("/update_game", methods=["POST"])
 def update_game():
     check_logged_in()
+    check_csrf()
     game_id = request.form["game_id"]
     game = games.get_game(game_id)
     if not game:
@@ -225,6 +236,7 @@ def login():
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             return "VIRHE: väärä tunnus tai salasana"
@@ -242,6 +254,7 @@ def logout():
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
     check_logged_in()
+    check_csrf()
 
     game_id = request.form["game_id"]
     content = request.form["content"]
@@ -264,6 +277,7 @@ def create_comment():
 @app.route("/register_game", methods=["POST"])
 def register_game():
     check_logged_in()
+    check_csrf()
     game_id = request.form["game_id"]
 
     game = games.get_game(game_id)
@@ -284,6 +298,7 @@ def register_game():
 @app.route("/unregister_game", methods=["POST"])
 def unregister_game():
     check_logged_in()
+    check_csrf()
     game_id = request.form["game_id"]
 
     game = games.get_game(game_id)

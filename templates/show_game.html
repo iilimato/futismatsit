@@ -33,13 +33,15 @@
 {% if session.user_id %}
     {% if is_registered %}
     <form action="/unregister_game" method="POST">
-        <input type="hidden" name="game_id" value="{{ game.id }}">
-        <input type="submit" value="Peru ilmoittautuminen">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="hidden" name="game_id" value="{{ game.id }}" />
+        <input type="submit" value="Peru ilmoittautuminen" />
     </form>
     {% elif spots_left > 0 %}
     <form action="/register_game" method="POST">
-        <input type="hidden" name="game_id" value="{{ game.id }}">
-        <input type="submit" value="Ilmoittaudu peliin">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        <input type="hidden" name="game_id" value="{{ game.id }}" />
+        <input type="submit" value="Ilmoittaudu peliin" />
     </form>
     {% else %}
     <p>Peli on täynnä.</p>
@@ -62,9 +64,10 @@
 {% if session.user_id %}
 <h4>Lisää kommentti</h4>
 <form action="/create_comment" method="POST">
-    <input type="hidden" name="game_id" value="{{ game.id }}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <input type="hidden" name="game_id" value="{{ game.id }}" />
     <p><textarea name="content" rows="4" cols="50" placeholder="Kirjoita kommentti..."></textarea></p>
-    <p><input type="submit" value="Lähetä"></p>
+    <p><input type="submit" value="Lähetä" /></p>
 </form>
 {% endif %}
 

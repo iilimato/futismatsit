@@ -6,6 +6,7 @@
 <h2>Poista peli-ilmoitus</h2>
 <p>Oletko varma, että haluat poistaa ilmoituksen pelistä "{{ game.title }}"?</p>
 <form action="/delete_game/{{ game.id }}" method="post">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" name="confirm" value="Poista ilmoitus" />
   <input type="submit" name="cancel" value="Peruuta" />
 </form>
