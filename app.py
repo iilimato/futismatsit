@@ -20,6 +20,8 @@ def check_logged_in():
 def check_csrf():
     if "csrf_token" not in request.form:
         abort(403)
+    if "csrf_token" not in session:
+        abort(403)
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
