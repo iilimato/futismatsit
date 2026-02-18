@@ -3,12 +3,20 @@ import secrets
 import sqlite3
 from flask import Flask, abort
 from flask import redirect, render_template, request, session
+import markupsafe
 import config
 import games
 import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 
 # helper: abort if user is not logged in

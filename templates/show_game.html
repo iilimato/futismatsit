@@ -9,7 +9,7 @@
 <p><a href="/delete_game/{{ game.id }}">Poista ilmoitus</a></p>
 {% endif %}
 
-<p>{{ game.description }}</p>
+<p>{{ game.description | show_lines }}</p>
 <p>Paikka: {{ game.location }}</p>
 <p>Päivämäärä: {{ game.date }} klo {{ game.time }}</p>
 <p>Pelaajia tarvitaan: {{ game.player_count }}</p>
@@ -54,7 +54,7 @@
 {% for comment in comments %}
 <div class="comment">
     <p>Käyttäjä <strong><a href="/user/{{ comment.user_id }}">{{ comment.username }}</a></strong> kommentoi ({{ comment.sent_at }}):</p>
-    <p>{{ comment.content }}</p>
+    <p>{{ comment.content | show_lines }}</p>
 </div>
 {% endfor %}
 {% else %}
