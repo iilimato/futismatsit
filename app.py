@@ -68,7 +68,9 @@ def show_user(user_id):
     if not user:
         abort(404)
     user_games = users.get_games_by_user(user_id)
-    return render_template("show_user.html", user=user, games=user_games)
+    user_registrations = users.get_registrations_by_user(user_id)
+    return render_template("show_user.html", user=user, games=user_games,
+                           registrations=user_registrations)
 
 
 # pages: creating, editing, and deleting games

@@ -39,3 +39,13 @@ def get_games_by_user(user_id):
              WHERE games.user_id = ?
              ORDER BY games.id DESC"""
     return db.query(sql, [user_id])
+
+
+def get_registrations_by_user(user_id):
+    sql = """SELECT games.id, games.title, games.date, games.time,
+             games.location
+             FROM registrations
+             JOIN games ON registrations.game_id = games.id
+             WHERE registrations.user_id = ?
+             ORDER BY games.id DESC"""
+    return db.query(sql, [user_id])
