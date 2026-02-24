@@ -1,7 +1,7 @@
 import re
 import secrets
 import sqlite3
-from flask import Flask, abort
+from flask import Flask, abort, flash
 from flask import redirect, render_template, request, session
 import markupsafe
 import config
@@ -222,10 +222,14 @@ def create():
         abort(403)
     if len(username) < 1 or len(username) > 20:
         abort(403)
-    if len(password1) < 4 or len(password1) > 100:
+    if len(password1) < 6:
+        flash("VIRHE: salasanan tulee olla vähintään 6 merkkiä")
+        return redirect("/register")
+    if len(password1) > 100:
         abort(403)
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+        flash("VIRHE: salasanat eivät ole samat")
+        return redirect("/register")
 
     try:
         users.create_user(username, password1)
