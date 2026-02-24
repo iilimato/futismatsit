@@ -145,7 +145,7 @@ def create_game():
         if level not in all_classes["Taitotaso"]:
             abort(403)
     date = request.form["date"]
-    if not re.search(r"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$", date):
+    if not re.search(r"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", date):
         abort(403)
     time = request.form["time"]
     if not re.search(r"^([01][0-9]|2[0-3]):[0-5][0-9]$", time):
@@ -181,7 +181,7 @@ def update_game():
     if len(description) < 1 or len(description) > 1000:
         abort(403)
     date = request.form["date"]
-    if not re.search(r"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$", date):
+    if not re.search(r"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", date):
         abort(403)
     time = request.form["time"]
     if not re.search(r"^([01][0-9]|2[0-3]):[0-5][0-9]$", time):
