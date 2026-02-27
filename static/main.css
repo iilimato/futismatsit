@@ -1,8 +1,25 @@
 body {
     font-family: Helvetica, sans-serif;
     margin: auto;
-    max-width: 50em;}
+    max-width: 50em;
+}
 
+header {
+    background-color: #2e7d32;
+    color: white;
+    padding: 1em;
+    border-radius: 0 0 8px 8px;
+}
+
+header h1 {
+    margin: 0 0 0.5em 0;
+}
+
+header nav a {
+    color: white;
+    padding: 0.3em 0.6em;
+    border-radius: 4px;
+}
 
 input[type=submit] {
     background-color: lightgreen;
@@ -10,4 +27,5 @@ input[type=submit] {
     padding: 10px 20px;
     border: none;
     border-radius: 15px;
-    cursor: pointer;}
+    cursor: pointer;
+}
