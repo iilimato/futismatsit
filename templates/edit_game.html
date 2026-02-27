@@ -17,7 +17,7 @@
   {% for class in classes %}
   <p>
     <label for="class_{{ class }}">{{ class }}:</label><br />
-    <select id="class_{{ class }}" name="{{ class }}">
+    <select id="class_{{ class }}" name="{{ class }}" required>
       <option value="">(valitse)</option>
       {% for option in classes[class] %}
       <option value="{{ option }}" {% if option == level %}selected{% endif %}>{{ option }}</option>

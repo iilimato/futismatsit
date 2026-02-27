@@ -137,13 +137,12 @@ def create_game():
         abort(403)
     all_classes = games.get_all_classes()
     level = request.form["Taitotaso"]
-
-    # check that level is valid
-    if level:
-        if "Taitotaso" not in all_classes:
-            abort(403)
-        if level not in all_classes["Taitotaso"]:
-            abort(403)
+    if not level:
+        abort(403)
+    if "Taitotaso" not in all_classes:
+        abort(403)
+    if level not in all_classes["Taitotaso"]:
+        abort(403)
     date = request.form["date"]
     if not re.search(r"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", date):
         abort(403)
@@ -194,11 +193,12 @@ def update_game():
         abort(403)
     all_classes = games.get_all_classes()
     level = request.form["Taitotaso"]
-    if level:
-        if "Taitotaso" not in all_classes:
-            abort(403)
-        if level not in all_classes["Taitotaso"]:
-            abort(403)
+    if not level:
+        abort(403)
+    if "Taitotaso" not in all_classes:
+        abort(403)
+    if level not in all_classes["Taitotaso"]:
+        abort(403)
 
     games.update_game(game_id, title, description, date, time,
                       location, player_count, level)
