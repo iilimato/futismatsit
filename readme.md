@@ -9,13 +9,12 @@ Kyseessä on sovellus, jossa käyttäjä pystyy etsimään seuraa jalkapallon pe
 - Käyttäjä näkee sovellukseen lisätyt ilmoitukset.
 - Käyttäjä pystyy etsimään ilmoituksia hakusanalla (hakee otsikosta, kuvauksesta ja sijainnista).
 - Käyttäjä pystyy jättämään kommentin tai kysymyksen ilmoitukseen.
-- Sovelluksessa on käyttäjäsivut, jotka näyttävät käyttäjän lisäämät ilmoitukset.
+- Sovelluksessa on käyttäjäsivut, jotka näyttävät käyttäjän lisäämät ilmoitukset ja tilastoja.
 - Käyttäjä pystyy ilmoittautumaan peliin ja katsomaan ilmoittautujien määrän ja käyttäjänimet. Ilmoittautumisen voi myös poistaa.
 
-## Tulossa olevat toiminnot
+## Sovelluksen asennus
 
-- Käyttäjäsivulle lisää tilastoja, esim. kuinka moneen peliin on osallistunut.
-- Käyttäjä pystyy valitsemaan ilmoitukselle kentän valmiista vaihtoehdoista (luokittelu).
+Sovelluksen tehokkuutta indeksien ja sivuttamisen avulla tutkiva raportti löytyy tiedostosta `performance-report.MD`.
   
 ## Sovelluksen asennus
 
