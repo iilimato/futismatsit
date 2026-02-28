@@ -42,3 +42,9 @@ CREATE TABLE registrations (
     game_id INTEGER REFERENCES games,
     user_id INTEGER REFERENCES users
 );
+
+CREATE INDEX idx_games_user_id ON games(user_id);
+CREATE INDEX idx_game_levels_game_id ON game_levels(game_id);
+CREATE INDEX idx_comments_game_id ON comments(game_id);
+CREATE INDEX idx_registrations_game_id ON registrations(game_id);
+CREATE INDEX idx_registrations_user_id ON registrations(user_id);

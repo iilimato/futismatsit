@@ -9,9 +9,9 @@ db.execute("DELETE FROM game_levels")
 db.execute("DELETE FROM games")
 db.execute("DELETE FROM users")
 
-user_count = 10000
-game_count = 10**6
-comment_count = 10**7
+user_count = 1000
+game_count = 10**5
+comment_count = 10**6
 
 locations = ["Lahti", "Helsinki", "Espoo", "Tampere", "Turku",
              "Oulu", "Jyväskylä", "Kuopio", "Vantaa", "Rovaniemi"]
