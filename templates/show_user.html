@@ -4,7 +4,7 @@
 
 {% block content %}
 <h2>Käyttäjä: {{ user.username }}</h2>
-<p>Käyttäjällä on {{ games|length }} ilmoitusta ja {{ registrations|length }} ilmoittautumista.</p>
+<p>Käyttäjällä on {{ games_count }} ilmoitusta ja {{ regs_count }} ilmoittautumista.</p>
 
 <h3>Ilmoitukset peleistä:</h3>
 <ul>
@@ -17,6 +17,12 @@
     <li>Käyttäjällä ei ole ilmoituksia.</li>
   {% endfor %}
 </ul>
+<p>
+  <a href="/user/{{ user.id }}/{{ page - 1 }}">&lt;&lt;</a>
+  Sivu {{ page }}/{{ page_count }}
+  <a href="/user/{{ user.id }}/{{ page + 1 }}">&gt;&gt;</a>
+</p>
+
 
 <h3>Ilmoittautumiset:</h3>
 <ul>
@@ -29,4 +35,6 @@
     <li>Käyttäjä ei ole ilmoittautunut peleihin.</li>
   {% endfor %}
 </ul>
+
+
 {% endblock %}

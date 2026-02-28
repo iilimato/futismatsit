@@ -31,21 +31,37 @@ def get_user(user_id):
     return result[0]
 
 
-def get_games_by_user(user_id):
+def count_games_by_user(user_id):
+    sql = "SELECT COUNT(*) count FROM games WHERE user_id = ?"
+    result = db.query(sql, [user_id])
+    return result[0]["count"]
+
+
+def get_games_by_user(user_id, page, page_size):
     sql = """SELECT games.id, games.title, games.description,
              games.date, games.time, games.location,
              games.player_count
              FROM games
              WHERE games.user_id = ?
-             ORDER BY games.id DESC"""
-    return db.query(sql, [user_id])
+             ORDER BY games.id DESC
+             LIMIT ? OFFSET ?"""
+    offset = page_size * (page - 1)
+    return db.query(sql, [user_id, page_size, offset])
 
 
-def get_registrations_by_user(user_id):
+def count_registrations_by_user(user_id):
+    sql = "SELECT COUNT(*) count FROM registrations WHERE user_id = ?"
+    result = db.query(sql, [user_id])
+    return result[0]["count"]
+
+
+def get_registrations_by_user(user_id, page, page_size):
     sql = """SELECT games.id, games.title, games.date, games.time,
              games.location
              FROM registrations
              JOIN games ON registrations.game_id = games.id
              WHERE registrations.user_id = ?
-             ORDER BY games.id DESC"""
-    return db.query(sql, [user_id])
+             ORDER BY games.id DESC
+             LIMIT ? OFFSET ?"""
+    offset = page_size * (page - 1)
+    return db.query(sql, [user_id, page_size, offset])

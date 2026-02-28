@@ -20,6 +20,12 @@
             </li>
         {% endfor %}
         </ul>
+
+        <p>
+          <a href="/find_game?query={{ query }}&page={{ page - 1 }}">&lt;&lt;</a>
+          Sivu {{ page }}/{{ page_count }}
+          <a href="/find_game?query={{ query }}&page={{ page + 1 }}">&gt;&gt;</a>
+        </p>
     {% elif query %}
         <p>Pelejä ei löytynyt hakusanalla "{{ query }}".</p>
     {% endif %}

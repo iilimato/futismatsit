@@ -1,3 +1,4 @@
+import math
 import re
 import secrets
 import sqlite3
@@ -48,9 +49,21 @@ def check_csrf():
 # pages: viewing games
 
 @app.route("/")
-def index():
-    all_games = games.get_games()
-    return render_template("index.html", games=all_games)
+@app.route("/<int:page>")
+def index(page=1):
+    page_size = 10
+    game_count = games.count_games()
+    page_count = math.ceil(game_count / page_size)
+    page_count = max(page_count, 1)
+
+    if page < 1:
+        return redirect("/1")
+    if page > page_count:
+        return redirect("/" + str(page_count))
+
+    all_games = games.get_games(page, page_size)
+    return render_template("index.html", games=all_games,
+                           page=page, page_count=page_count)
 
 
 @app.route("/game/<int:game_id>")
@@ -73,23 +86,53 @@ def game(game_id):
 @app.route("/find_game")
 def find_game():
     query = request.args.get("query")
+    page = request.args.get("page", 1, type=int)
+    page_size = 10
     games_list = []
+    page_count = 1
+
     if query:
-        games_list = games.find_games_by_query(query)
-    if not query:
-        return render_template("find_game.html", games=games_list, query="")
-    return render_template("find_game.html", games=games_list, query=query)
+        game_count = games.count_games_by_query(query)
+        page_count = math.ceil(game_count / page_size)
+        page_count = max(page_count, 1)
+
+        if page < 1:
+            page = 1
+        if page > page_count:
+            page = page_count
+
+        games_list = games.find_games_by_query(query, page, page_size)
+
+    return render_template("find_game.html", games=games_list,
+                           query=query or "", page=page,
+                           page_count=page_count)
 
 
 @app.route("/user/<int:user_id>")
-def show_user(user_id):
+@app.route("/user/<int:user_id>/<int:page>")
+def show_user(user_id, page=1):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    user_games = users.get_games_by_user(user_id)
-    user_registrations = users.get_registrations_by_user(user_id)
+
+    page_size = 10
+    games_count = users.count_games_by_user(user_id)
+    regs_count = users.count_registrations_by_user(user_id)
+    games_page_count = max(math.ceil(games_count / page_size), 1)
+    regs_page_count = max(math.ceil(regs_count / page_size), 1)
+    max_page = max(games_page_count, regs_page_count)
+
+    if page < 1:
+        return redirect("/user/" + str(user_id) + "/1")
+    if page > max_page:
+        return redirect("/user/" + str(user_id) + "/" + str(max_page))
+
+    user_games = users.get_games_by_user(user_id, page, page_size)
+    user_registrations = users.get_registrations_by_user(user_id, page, page_size)
     return render_template("show_user.html", user=user, games=user_games,
-                           registrations=user_registrations)
+                           registrations=user_registrations,
+                           games_count=games_count, regs_count=regs_count,
+                           page=page, page_count=max_page)
 
 
 # pages: creating, editing, and deleting games
