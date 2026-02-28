@@ -1,7 +1,8 @@
 import re
 import secrets
 import sqlite3
-from flask import Flask, abort, flash
+import time
+from flask import Flask, abort, flash, g
 from flask import redirect, render_template, request, session
 import markupsafe
 import config
@@ -10,6 +11,16 @@ import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+@app.before_request
+def before_request():
+    g.start_time = time.time()
+
+@app.after_request
+def after_request(response):
+    elapsed_time = round(time.time() - g.start_time, 2)
+    print("elapsed time:", elapsed_time, "s")
+    return response
 
 
 @app.template_filter()
