@@ -4,19 +4,27 @@
 
 {% block content %}
 <h2>{{ game.title }}</h2>
+
 {% if session.user_id == game.user_id %}
-<p><a href="/edit_game/{{ game.id }}">Muokkaa ilmoitusta</a></p>
-<p><a href="/delete_game/{{ game.id }}">Poista ilmoitus</a></p>
+<p class="game-actions">
+  <a href="/edit_game/{{ game.id }}">Muokkaa ilmoitusta</a>
+  <a href="/delete_game/{{ game.id }}">Poista ilmoitus</a>
+</p>
 {% endif %}
 
-<p>{{ game.description | show_lines }}</p>
-<p>Paikka: {{ game.location }}</p>
-<p>Päivämäärä: {{ game.date }} klo {{ game.time }}</p>
-<p>Pelaajia tarvitaan: {{ game.player_count }}</p>
-{% if level %}
-<p>Taitotaso: {{ level }}</p>
-{% endif %}
-<p>Ilmoittaja: <a href="/user/{{ game.user_id }}"> {{ game.username }}</a></p>
+<div class="game-details">
+  <p><strong>Kuvaus:</strong></p>
+  <p>{{ game.description | show_lines }}</p>
+  <table class="game-info">
+    <tr><td><strong>Paikka</strong></td><td>{{ game.location }}</td></tr>
+    <tr><td><strong>Päivämäärä</strong></td><td>{{ game.date }} klo {{ game.time }}</td></tr>
+    <tr><td><strong>Pelaajia tarvitaan</strong></td><td>{{ game.player_count }}</td></tr>
+    {% if level %}
+    <tr><td><strong>Taitotaso</strong></td><td>{{ level }}</td></tr>
+    {% endif %}
+    <tr><td><strong>Ilmoittaja</strong></td><td><a href="/user/{{ game.user_id }}">{{ game.username }}</a></td></tr>
+  </table>
+</div>
 
 <h3>Ilmoittautuneet:</h3>
 

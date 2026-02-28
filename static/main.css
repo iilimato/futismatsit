@@ -53,6 +53,41 @@ main {
   margin: 1em;
 }
 
+.game-details {
+  border: 2px solid #2e7d32;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+
+.game-info {
+  border-collapse: collapse;
+  margin: 0.5em 0;
+}
+
+.game-info td {
+  padding: 0.3em 1em 0.3em 0;
+  border-bottom: 1px solid lightgrey;
+}
+
+.game-actions {
+  margin: 0.5em 0;
+}
+
+.game-actions a {
+  margin-right: 1em;
+}
+
+.comment {
+  border: 1px solid grey;
+  padding: 0.2em 0.5em;
+  margin: 0.5em 0;
+}
+
+textarea {
+  width: 100%;
+  max-width: 30em;
+}
+
 input[type=submit] {
   background-color: #2e7d32;
   color: white;
