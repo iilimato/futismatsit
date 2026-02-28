@@ -9,30 +9,25 @@
   Täällä voit löytää seuraa jalkapalloon tai luoda oman ilmoituksen pelistä.
 </p>
 
-{% if "user_id" in session %}
+<h2>Viimeisimmät ilmoitukset</h2>
 
-<p>Olet kirjautunut sisään käyttäjänä {{ session.username }}. </p>
-<p>
-  <a href="/new_game">Luo uusi ilmoitus</a>
-</p>
-{% endif %}
+{% for game in games %}
+<div class="game">
+  <p>
+    <a href="/game/{{ game.id }}">{{ game.title }}</a>
+  </p>
+  <p>
+    {{ game.date }} klo {{ game.time }} – {{ game.location }}
+  </p>
+</div>
+{% else %}
+<p>Ei ilmoituksia.</p>
+{% endfor %}
 
-<h3>Viimeisimmät ilmoitukset</h3>
-<ul>
-  {% for game in games %}
-    <li>
-      <a href="/game/{{ game.id }}">{{ game.title }}</a>
-      - {{ game.date }} klo {{ game.time }} - {{ game.location }}
-    </li>
-  {% else %}
-    <li>Ei ilmoituksia.</li>
-  {% endfor %}
-</ul>
-
-<p>
+<div class="pagination">
   <a href="/{{ page - 1 }}">&lt;&lt;</a>
   Sivu {{ page }}/{{ page_count }}
   <a href="/{{ page + 1 }}">&gt;&gt;</a>
-</p>
+</div>
 
 {% endblock %}
