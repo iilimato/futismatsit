@@ -288,7 +288,8 @@ def create():
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
+        flash("VIRHE: tunnus on jo varattu")
+        return redirect("/register")
 
     return redirect("/login")
 
@@ -309,7 +310,8 @@ def login():
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
-            return "VIRHE: väärä tunnus tai salasana"
+            flash("VIRHE: väärä tunnus tai salasana")
+            return redirect("/login")
 
 
 @app.route("/logout")
