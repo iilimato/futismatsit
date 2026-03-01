@@ -18,9 +18,13 @@
   {% endfor %}
 </ul>
 <p>
+  {% if page > 1 %}
   <a href="/user/{{ user.id }}/{{ page - 1 }}">&lt;&lt;</a>
+  {% endif %}
   Sivu {{ page }}/{{ page_count }}
+  {% if page < page_count %}
   <a href="/user/{{ user.id }}/{{ page + 1 }}">&gt;&gt;</a>
+  {% endif %}
 </p>
 
 

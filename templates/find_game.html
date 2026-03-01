@@ -22,9 +22,13 @@
         </ul>
 
         <p>
+          {% if page > 1 %}
           <a href="/find_game?query={{ query }}&page={{ page - 1 }}">&lt;&lt;</a>
+          {% endif %}
           Sivu {{ page }}/{{ page_count }}
+          {% if page < page_count %}
           <a href="/find_game?query={{ query }}&page={{ page + 1 }}">&gt;&gt;</a>
+          {% endif %}
         </p>
     {% elif query %}
         <p>Pelejä ei löytynyt hakusanalla "{{ query }}".</p>
