@@ -96,7 +96,17 @@ label {
 }
 
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=number],
+input[type=date],
+input[type=time] {
+  width: 100%;
+  max-width: 20em;
+  padding: 0.4em;
+  border: 1px solid grey;
+}
+
+select {
   width: 100%;
   max-width: 20em;
   padding: 0.4em;
