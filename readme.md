@@ -43,6 +43,12 @@ Testidata generoitiin `seed.py`-tiedostolla:
 - Pelit: 100000
 - Kommentit: 1000000
 
+Jos haluat itse testata suurilla tietomäärillä, voit säätää mieleiset lukumäärät tiedostossa ja ajaa sen komennolla:
+
+```
+$ python3 seed.py
+```
+
 ### Tulokset ilman indeksejä
 
 | Sivu | Aika |
