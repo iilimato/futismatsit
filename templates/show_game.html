@@ -7,8 +7,8 @@
 
 {% if session.user_id == game.user_id %}
 <p class="game-actions">
-  <a href="/edit_game/{{ game.id }}">Muokkaa ilmoitusta</a>
-  <a href="/delete_game/{{ game.id }}">Poista ilmoitus</a>
+  <a href="/edit_game/{{ game.id }}" class="button">Muokkaa ilmoitusta</a>
+  <a href="/delete_game/{{ game.id }}" class="button">Poista ilmoitus</a>
 </p>
 {% endif %}
 
