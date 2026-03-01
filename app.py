@@ -96,10 +96,8 @@ def find_game():
         page_count = math.ceil(game_count / page_size)
         page_count = max(page_count, 1)
 
-        if page < 1:
-            page = 1
-        if page > page_count:
-            page = page_count
+        page = max(page, 1)
+        page = min(page, page_count)
 
         games_list = games.find_games_by_query(query, page, page_size)
 

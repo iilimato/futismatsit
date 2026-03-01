@@ -7,8 +7,10 @@ def get_all_classes():
 
     classes = {}
     for title, value in result:
-        classes[title].append(
-            value) if title in classes else classes.setdefault(title, [value])
+        if title in classes:
+            classes[title].append(value)
+        else:
+            classes[title] = [value]
 
     return classes
 
