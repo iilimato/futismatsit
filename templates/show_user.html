@@ -7,17 +7,20 @@
 <p>Käyttäjällä on {{ games_count }} ilmoitusta ja {{ regs_count }} ilmoittautumista.</p>
 
 <h3>Ilmoitukset peleistä:</h3>
-<ul>
-  {% for game in games %}
-    <li>
-      <a href="/game/{{ game.id }}">{{ game.title }}</a>
-      - {{ game.date }} klo {{ game.time }} - {{ game.location }}
-    </li>
-  {% else %}
-    <li>Käyttäjällä ei ole ilmoituksia.</li>
-  {% endfor %}
-</ul>
-<p>
+{% for game in games %}
+<div class="game">
+  <p>
+    <a href="/game/{{ game.id }}">{{ game.title }}</a>
+  </p>
+  <p>
+    {{ game.date }} klo {{ game.time }} – {{ game.location }}
+  </p>
+</div>
+{% else %}
+<p>Käyttäjällä ei ole ilmoituksia.</p>
+{% endfor %}
+
+<div class="pagination">
   {% if page > 1 %}
   <a href="/user/{{ user.id }}/{{ page - 1 }}">&lt;&lt;</a>
   {% endif %}
@@ -25,20 +28,21 @@
   {% if page < page_count %}
   <a href="/user/{{ user.id }}/{{ page + 1 }}">&gt;&gt;</a>
   {% endif %}
-</p>
-
+</div>
 
 <h3>Ilmoittautumiset:</h3>
-<ul>
-  {% for game in registrations %}
-    <li>
-      <a href="/game/{{ game.id }}">{{ game.title }}</a>
-      - {{ game.date }} klo {{ game.time }} - {{ game.location }}
-    </li>
-  {% else %}
-    <li>Käyttäjä ei ole ilmoittautunut peleihin.</li>
-  {% endfor %}
-</ul>
+{% for game in registrations %}
+<div class="game">
+  <p>
+    <a href="/game/{{ game.id }}">{{ game.title }}</a>
+  </p>
+  <p>
+    {{ game.date }} klo {{ game.time }} – {{ game.location }}
+  </p>
+</div>
+{% else %}
+<p>Käyttäjä ei ole ilmoittautunut peleihin.</p>
+{% endfor %}
 
 
 {% endblock %}

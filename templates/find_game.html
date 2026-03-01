@@ -10,32 +10,31 @@
         <input type="submit" value="Etsi" />
     </form>
 
-    {% if games %}
-        <h2>Hakutulokset:</h2>
-        <ul>
-        {% for game in games %}
-            <li>
-                <a href="/game/{{ game.id }}">{{ game.title }}</a>
-                - {{ game.date }} klo {{ game.time }} - {{ game.location }}
-            </li>
-        {% endfor %}
-        </ul>
+{% if games %}
+<h2>Hakutulokset:</h2>
+{% for game in games %}
+<div class="game">
+  <p>
+    <a href="/game/{{ game.id }}">{{ game.title }}</a>
+  </p>
+  <p>
+    {{ game.date }} klo {{ game.time }} – {{ game.location }}
+  </p>
+</div>
+{% endfor %}
 
-        <p>
-          {% if page > 1 %}
-          <a href="/find_game?query={{ query }}&page={{ page - 1 }}">&lt;&lt;</a>
-          {% endif %}
-          Sivu {{ page }}/{{ page_count }}
-          {% if page < page_count %}
-          <a href="/find_game?query={{ query }}&page={{ page + 1 }}">&gt;&gt;</a>
-          {% endif %}
-        </p>
-    {% elif query %}
-        <p>Pelejä ei löytynyt hakusanalla "{{ query }}".</p>
-    {% endif %}
-
-
-
+<div class="pagination">
+  {% if page > 1 %}
+  <a href="/find_game?query={{ query }}&page={{ page - 1 }}">&lt;&lt;</a>
+  {% endif %}
+  Sivu {{ page }}/{{ page_count }}
+  {% if page < page_count %}
+  <a href="/find_game?query={{ query }}&page={{ page + 1 }}">&gt;&gt;</a>
+  {% endif %}
+</div>
+{% elif query %}
+<p>Pelejä ei löytynyt hakusanalla "{{ query }}".</p>
+{% endif %}
 
 
 {% endblock %}
