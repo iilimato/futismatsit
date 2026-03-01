@@ -9,6 +9,10 @@
   Täällä voit löytää seuraa jalkapalloon tai luoda oman ilmoituksen pelistä.
 </p>
 
+{% if session.username %}
+<p><a href="/new_game">Luo uusi ilmoitus</a></p>
+{% endif %}
+
 <h2>Viimeisimmät ilmoitukset</h2>
 
 {% for game in games %}

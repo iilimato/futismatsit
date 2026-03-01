@@ -12,6 +12,7 @@
     <nav>
       <a href="/">Etusivu</a>
       {% if session.username %}
+        | <a href="/new_game">Uusi ilmoitus</a>
         | <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
         | <a href="/logout">Kirjaudu ulos</a>
       {% else %}
