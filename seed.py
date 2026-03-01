@@ -13,8 +13,8 @@ user_count = 1000
 game_count = 10**5
 comment_count = 10**6
 
-locations = ["Lahti", "Helsinki", "Espoo", "Tampere", "Turku",
-             "Oulu", "Jyväskylä", "Kuopio", "Vantaa", "Rovaniemi"]
+locations = ["Lahden kisapuisto", "Töölön Pallokenttä 3", "Väinämöisen kenttä", "Tammelan stadion", "Kupittaan alakenttä",
+             "Arabianrannan kenttä", "Laaksolahden jalkapallohalli", "Kuopion keskuskenttä", "Tikkurilan urheilupuisto", "Tapiolan urheilupuisto"]
 levels = ["Aloittelijat", "Keskitaso", "Edistyneet"]
 
 for i in range(1, user_count + 1):
