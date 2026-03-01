@@ -35,6 +35,47 @@ $ flask run
 
 ## Suuren tietomäärän käsittely
 
-Sovellusta on testattu suurella tietomäärällä tiedoston `seed.py` avulla. Testitiedot sisältävät 1000 käyttäjää, 100000 peliä ja 1000000 kommenttia.
+### Testidata
 
-Raportti löytyy tiedostosta `performance-report.md`.
+Testidata generoitiin seed.py-tiedostolla:
+
+- Käyttäjät: 1000
+- Pelit: 100000
+- Kommentit: 1000000
+
+### Tulokset ilman indeksejä
+
+| Sivu | Aika |
+|------|------|
+| Etusivu: / | 0,50 s |
+| Pelisivu: /game/ | 0,07–0,28 s |
+| Käyttäjäsivu: /user/ | 0,02–0,08 s |
+| Haku: /find_game?query=Oulu | 0,34 s |
+
+### Tulokset indekseillä
+
+| Sivu | Aika |
+|------|------|
+| Etusivu: / | 0,55 s |
+| Pelisivu: /game/ | 0,00–0,02 s |
+| Käyttäjäsivu: /user/ | 0,00–0,02 s |
+| Haku: /find_game?query=Oulu | 0,11 s |
+
+### Tulokset
+
+Indeksit paransivat pelisivun latausaikoja huomattavasti. Etusivu on edelleen hidas. Tämä johtuu todennäköisesti siitä, että se lataa kaikki 100000 peliä. Tämä voidaan todennäköisesti ratkaista sivutuksella. Teen sen seuraavaksi.
+
+### Tulokset indekseillä ja sivutuksella
+
+| Sivu | Aika |
+|------|------|
+| Etusivu: / | 0,00–0,02 s |
+| Etusivu (sivu 2): /2 | 0,00-0,02 s |
+| Pelisivu: /game/ | 0,00-0,02 s |
+| Käyttäjäsivu: /user/ | 0,00–0,01 s |
+| Käyttäjäsivu (sivu 2): /user/2/2 | 0,00–0,01 s |
+| Haku: /find_game?query=Oulu | 0,08 s |
+
+### Johtopäätökset
+
+Sivutuksen lisääminen korjasi etusivun hitauden. Kaikki sivut latautuvat nyt nopeasti.
