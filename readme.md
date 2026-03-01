@@ -37,7 +37,7 @@ $ flask run
 
 ### Testidata
 
-Testidata generoitiin seed.py-tiedostolla:
+Testidata generoitiin `seed.py`-tiedostolla:
 
 - Käyttäjät: 1000
 - Pelit: 100000
@@ -79,3 +79,7 @@ Indeksit paransivat pelisivun latausaikoja huomattavasti. Etusivu on edelleen hi
 ### Johtopäätökset
 
 Sivutuksen lisääminen korjasi etusivun hitauden. Kaikki sivut latautuvat nyt nopeasti.
+
+## Pylint-virheet
+
+Tiedostossa `pylint-report.md` löytyy raportti pylint-testeistä ja perustelut miksi osa virheistä jätettiin korjaamatta lopulliseen sovellukseen.
