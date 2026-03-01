@@ -2,7 +2,7 @@
 
 Kyseessä on sovellus, jossa käyttäjä pystyy etsimään seuraa jalkapallon pelaamiseen. Sovellus siis näyttää kentät ja ajat jolloin ihmisiä on menossa pelaamaan, ja niihin voi ilmoittautua mukaan.
 
-## Toiminnot tällä hetkellä
+## Toiminnot
 
 - Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 - Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan ilmoituksia peleistä.
@@ -12,10 +12,6 @@ Kyseessä on sovellus, jossa käyttäjä pystyy etsimään seuraa jalkapallon pe
 - Sovelluksessa on käyttäjäsivut, jotka näyttävät käyttäjän lisäämät ilmoitukset ja tilastoja.
 - Käyttäjä pystyy ilmoittautumaan peliin ja katsomaan ilmoittautujien määrän ja käyttäjänimet. Ilmoittautumisen voi myös poistaa.
 
-## Sovelluksen asennus
-
-Sovelluksen tehokkuutta indeksien ja sivuttamisen avulla tutkiva raportti löytyy tiedostosta `performance-report.MD`.
-  
 ## Sovelluksen asennus
 
 Asenna `flask`-kirjasto:
@@ -36,3 +32,9 @@ Voit käynnistää sovelluksen näin:
 ```
 $ flask run
 ```
+
+## Suuren tietomäärän käsittely
+
+Sovellusta on testattu suurella tietomäärällä tiedoston `seed.py` avulla. Testitiedot sisältävät 1000 käyttäjää, 100000 peliä ja 1000000 kommenttia.
+
+Raportti löytyy tiedostosta `performance-report.md`.
